@@ -12,6 +12,48 @@ class Node {
 }
 
 /**
+ * Класс игры в считалочку, надстройка над классом списка
+ * */
+class CounterGame {
+
+    private CircularLinkedList CLL = null;
+
+    CounterGame(String[] args) {
+        this.CLL = new CircularLinkedList(args);
+    }
+
+    public boolean searchForWinner(String searchValue) {
+        return this.CLL.containsNode(searchValue);
+    }
+
+    public void getGameWinner() {
+        this.CLL.traverseList();
+    }
+
+    /**
+     * Метод игры в считалочку
+     * @param index - индекс элемента, который нужно удалить
+     * */
+    public void deleteNodeByGameIndex(int index) {
+        if (CLL.getHead() == null || index < 0) {
+            return;
+        }
+        if (CLL.size() == 1) {
+            return;
+        }
+        int indexForExclude = 0;
+        for (Node node = CLL.getHead(); CLL.size() > 0; node = node.nextNode) {
+            if (indexForExclude == index) {
+                CLL.deleteNodeByValue(node.value);
+                indexForExclude = 0;
+            } else {
+                indexForExclude++;
+            }
+        }
+    }
+}
+
+/**
  * Класс - круговой связный список
  * @author Никита Аверочкин
  * @version 1.0
@@ -28,6 +70,17 @@ public class CircularLinkedList {
         for (int i=0;i<args.length;i++) {
             addNode(args[i]);
         }
+    }
+
+    /**
+     * Методы геттеры первого и последнего узла списка
+     * @return head, tail - первый и последний узлы
+     * */
+    public Node getHead() {
+        return this.head;
+    }
+    public Node getTail() {
+        return this.tail;
     }
 
     /**
@@ -111,28 +164,6 @@ public class CircularLinkedList {
             }
             currentNode = nextNode;
         } while (currentNode != head);
-    }
-
-    /**
-     * Метод игры в считалочку
-     * @param index - индекс элемента, который нужно удалить
-     * */
-    public void deleteNodeByGameIndex(int index) {
-        if (head == null || index < 0) {
-            return;
-        }
-        if (size() == 1) {
-            return;
-        }
-        int indexForExclude = 0;
-        for (Node node = head; size() > 0; node = node.nextNode) {
-            if (indexForExclude == index) {
-                deleteNodeByValue(node.value);
-                indexForExclude = 0;
-            } else {
-                indexForExclude++;
-            }
-        }
     }
 
     /**

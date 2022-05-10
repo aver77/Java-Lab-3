@@ -56,14 +56,14 @@ public class TestCircularLinkedList {
 
     @Test
     public void counterGame() {
-        CircularLinkedList cll = new CircularLinkedList(new String[]{"Ilya", "Pasha", "Andrew"});
+        CounterGame cg = new CounterGame(new String[]{"Ilya", "Pasha", "Andrew"});
         int countForExclude = 3;
-        cll.deleteNodeByGameIndex(countForExclude);
+        cg.deleteNodeByGameIndex(countForExclude);
         String expectedResult = "Pasha";
 
-        cll.traverseList();
-        Assert.assertFalse(cll.containsNode("Ilya"));
-        Assert.assertFalse(cll.containsNode("Andrew"));
-        Assert.assertTrue(cll.containsNode(expectedResult));
+        cg.getGameWinner();
+        Assert.assertFalse(cg.searchForWinner("Ilya"));
+        Assert.assertFalse(cg.searchForWinner("Andrew"));
+        Assert.assertTrue(cg.searchForWinner(expectedResult));
     }
 }
